@@ -11,6 +11,7 @@ def authenticate():
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         api = tweepy.API(auth)
 
+        print ("Authentication OK")
         return api
 
     except tweepy.TweepError as e:
