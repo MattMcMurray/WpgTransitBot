@@ -3,8 +3,6 @@ Using Winnipeg Transit's
 
 ####Requirements
 - You will need to have [Tweepy](https://github.com/tweepy/tweepy) installed (`pip install tweepy`)
-- I also used colorama for cross-platform coloured output, but this should come packaged with Python if I'm not mistaken
-
 
 ####Authentication
 To set up Twitter's/Tweepy's authentication, create a Python file (Secrets.py) in the source directory with the following:
