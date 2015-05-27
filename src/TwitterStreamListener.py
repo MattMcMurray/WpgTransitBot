@@ -6,12 +6,13 @@ import tweepy
 class TwitterStreamListener (tweepy.StreamListener):
 
     def on_status(self, status):
-        # user_input = status.text
-        # # process(user_input) TODO
-        # print user_input
         try:
             print(status.text)
+
         except Exception as e:
             print 'Something went wrong'
             print e.message
 
+
+    def on_error(self, status_code):
+        print('ERROR: Twitter returned streaming status code {0}'.format(status_code))

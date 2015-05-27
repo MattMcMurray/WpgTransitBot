@@ -3,15 +3,15 @@ __author__ = 'Mathieu'
 import tweepy
 
 from TwitterStreamListener import TwitterStreamListener
-import Auth
+from Auth import API
+
 
 def run():
 
-    api = Auth.authenticate()
+    stream_listener = TwitterStreamListener()
+    stream = tweepy.Stream(auth=API.auth, listener=stream_listener)
 
-    myStreamListener = TwitterStreamListener()
-    myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
+    stream.filter(track=['dogs'])
 
-    myStream.filter(track = ['dogs'])
 
 run()
