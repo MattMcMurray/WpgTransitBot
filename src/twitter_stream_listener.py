@@ -1,7 +1,7 @@
 __author__ = 'Mathieu'
 
 import tweepy
-from Bot import reply
+from bot import reply
 
 
 class TwitterStreamListener (tweepy.StreamListener):

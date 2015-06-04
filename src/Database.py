@@ -1,7 +1,7 @@
 __author__ = 'Mathieu'
 
 import MySQLdb
-from Secrets import DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME
+from secrets import DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME
 
 def connect():
     conn = MySQLdb.connect(host='localhost',

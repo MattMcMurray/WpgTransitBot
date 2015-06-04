@@ -2,9 +2,9 @@ __author__ = 'Mathieu'
 
 import tweepy
 
-from TwitterStreamListener import TwitterStreamListener
-from Auth import API
-from Database import connect, close
+from twitter_stream_listener import TwitterStreamListener
+from auth import API
+from database import connect, close
 from datetime import datetime
 
 
