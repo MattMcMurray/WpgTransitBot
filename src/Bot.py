@@ -18,7 +18,7 @@ def run():
     return
 
 
-def reply(tweet):
+def attempt_reply(tweet):
 
     if validate_user(tweet.user):
         # send_reply(user.id)
@@ -27,12 +27,14 @@ def reply(tweet):
     return
 
 
-def validate_user(user):
+def validate_user(user_id):
 
     cursor, connection = connect()
 
+    valid_user = False
+
     # Check if the user has been banned for abusing the service
-    query = "SELECT * FROM users WHERE uID = {0}".format(user)
+    query = "SELECT * FROM users WHERE uID = {0}".format(user_id)
     data = cursor.execute(query)
     data = cursor.fetchone()
     last_reply_time = data[1]
@@ -40,6 +42,7 @@ def validate_user(user):
     user_warned = data[3]
 
     if user_banned != 1:
+        valid_user = True
 
         diff = datetime.now() - last_reply_time
 
@@ -51,7 +54,19 @@ def validate_user(user):
         else:
             print 'neat'
 
-    return
+    cursor.close()
+    connection.close()
+
+    return valid_user
+
+
+def send_reply(reply_to_tweet):
+    username = reply_to_tweet.screen_name
+    tweet_id = reply_to_tweet.id
+
+    msg = "Your tweet was received"
+
+    API.update_status(status=msg, in_reply_to_status_id=)
 
 
 if __name__ == '__main__':

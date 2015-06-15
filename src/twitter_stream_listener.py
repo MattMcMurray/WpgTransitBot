@@ -1,14 +1,14 @@
 __author__ = 'Mathieu'
 
 import tweepy
-from bot import reply
+from bot import attempt_reply
 
 
 class TwitterStreamListener (tweepy.StreamListener):
 
     def on_status(self, status):
         try:
-            reply()
+            attempt_reply()
 
         except Exception as e:
             print 'ERROR: Fetching tweets went wrong.'
