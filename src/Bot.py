@@ -96,7 +96,7 @@ def send_reply(reply_to_tweet, msg_body):
     message = "@{0} {1}".format(username, msg_body)
 
     print message
-    API.update_status(status=message)
+    API.update_status(status=message, in_reply_to_status_id=tweet_id)
     print 'Message sent!'
 
 
