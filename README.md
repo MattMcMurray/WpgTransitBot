@@ -3,7 +3,7 @@ Using Winnipeg Transit's developer API and Tweepy to replicate Transit's bustxt 
 
 ####Requirements
 - You will need to have the following installed:
-  - [Tweepy](https://github.com/tweepy/tweepy) installed (`pip install tweepy`)
+  - [Tweepy](https://github.com/tweepy/tweepy) (`pip install tweepy`)
   - Dateutil (`pip install python-dateutil`)
   - Pytz (for timezone adjustement) (`pip install pytz`)
   - That's it!
