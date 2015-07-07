@@ -1,5 +1,3 @@
-__author__ = 'Mathieu'
-
 import tweepy
 
 from secrets import ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET

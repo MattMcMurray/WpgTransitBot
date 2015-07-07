@@ -1,5 +1,3 @@
-__author__ = 'Mathieu'
-
 import tweepy
 
 from auth import API
@@ -30,7 +28,7 @@ def run():
     print 'Tracking tweets...'
 
     while True:
-        
+
         try:
             stream.filter(track=['@WpgTransitBot'])
 
