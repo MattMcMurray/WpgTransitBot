@@ -27,9 +27,17 @@ def run():
     stream_listener = TwitterStreamListener()
     stream = tweepy.Stream(auth=API.auth, listener=stream_listener)
 
-    stream.filter(track=['@WpgTransitBot'])
-
     print 'Tracking tweets...'
+
+    while True:
+        
+        try:
+            stream.filter(track=['@WpgTransitBot'])
+
+        except AttributeError as e:
+            print "Attribute error; this seems to be a bug with StreamListener"
+            print e.message
+            continue
 
     return
 
