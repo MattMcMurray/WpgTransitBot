@@ -20,12 +20,19 @@ class TwitterStreamListener (tweepy.StreamListener):
 
 
 def run():
+    startupmsg = "Find a bug? Want to request a feature? -> github.com/MattMcMurray/WpgTransitBot/issues"
 
     print 'Starting...'
     stream_listener = TwitterStreamListener()
     stream = tweepy.Stream(auth=API.auth, listener=stream_listener)
 
     print 'Tracking tweets...'
+
+    try:
+        API.update_status(status=startupmsg)
+    except Exception as e:
+        print "Could not send startupmsg"
+        print e.message
 
     while True:
 
