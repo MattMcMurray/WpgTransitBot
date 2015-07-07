@@ -1,5 +1,5 @@
 # WpgTransitBot
-Using Winnipeg Transit's 
+Using Winnipeg Transit's developer API and Tweepy to replicate Transit's bustxt service on Twitter
 
 ####Requirements
 - You will need to have [Tweepy](https://github.com/tweepy/tweepy) installed (`pip install tweepy`)
