@@ -12,7 +12,6 @@ def __request_bus_times(stopnum, start_time, end_time):
     url += '?start={0}&end={1}'.format(start_time, end_time)
     url += '&api-key={0}'.format(TRANSIT_API_KEY)
 
-    print 'querying: ', url
     try:
         xml_file = urllib2.urlopen(url)
         data = xml_file.read()
