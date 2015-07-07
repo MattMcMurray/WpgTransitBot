@@ -5,6 +5,7 @@ from xml.dom.minidom import parse
 from secrets import TRANSIT_API_KEY
 from time_adjust import get_wpg_time
 from dateutil import parser
+from services import printlog
 
 
 def __request_bus_times(stopnum, start_time, end_time):
@@ -22,7 +23,8 @@ def __request_bus_times(stopnum, start_time, end_time):
         return dom
 
     except IOError as e:
-        print (e)
+        printlog("IOError while requesting bus times")
+        printlog(e.message)
 
         return None
 
@@ -45,7 +47,7 @@ def get_next_arrival(stopnum, routenum):
                 next_arrival = parser.parse(arrival)
 
     except Exception as e:
-        print 'Something went wrong while parsing XML for stop schedule'
-        print e.message
+        printlog('Something went wrong while parsing XML for stop schedule')
+        printlog(e.message)
 
     return next_arrival

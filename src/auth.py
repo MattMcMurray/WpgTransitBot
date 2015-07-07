@@ -1,6 +1,7 @@
 import tweepy
 
 from secrets import ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET
+from services import printlog
 
 
 def authenticate():
@@ -13,7 +14,8 @@ def authenticate():
         return api
 
     except tweepy.TweepError as e:
-        print e.message
+    	printlog("Tweepy Error while autheticating")
+        printlog(e.message)
         return False
 
 API = authenticate()
