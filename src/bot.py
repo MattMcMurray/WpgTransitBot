@@ -34,8 +34,6 @@ def run():
         printlog("Could not send startupmsg:")
         printlog(e.message)
 
-    raise Exception("This is a test")
-
     while True:
 
         try:
