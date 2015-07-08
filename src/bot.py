@@ -10,9 +10,8 @@ class TwitterStreamListener (tweepy.StreamListener):
 
     def on_status(self, status):
         try:
-            ouptut = "Received tweet: " 
-            output += status.text
-            printlog(output)
+            printlog("Received new tweet: ")
+            printlog(status.text)
             parse_input(status)
 
         except Exception as e:
