@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="WpgTransitBot : Using Winnipeg Transit&#39;s developer API and Tweepy to replicate Transit&#39;s bustxt service on Twitter">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>WpgTransitBot</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/MattMcMurray/WpgTransitBot">View on GitHub</a>
+
+          <h1 id="project_title">WpgTransitBot</h1>
+          <h2 id="project_tagline">Using Winnipeg Transit&#39;s developer API and Tweepy to replicate Transit&#39;s bustxt service on Twitter</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/MattMcMurray/WpgTransitBot/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/MattMcMurray/WpgTransitBot/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h4>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h4>
+
+<ul>
+<li>You will need to have the following installed:
+
+<ul>
+<li>
+<a href="https://github.com/tweepy/tweepy">Tweepy</a> (<code>pip install tweepy==3.2.0</code>)
+
+<ul>
+<li>due to a known issue in the newest version of Tweepy, make sure to use V3.2.0</li>
+</ul>
+</li>
+<li>Dateutil (<code>pip install python-dateutil</code>)</li>
+<li>Pytz (for timezone adjustement) (<code>pip install pytz</code>)</li>
+<li>That's it!</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication</h4>
+
+<p>To set up Twitter's/Tweepy's authentication, create a Python file (Secrets.py) in the source directory with the following:</p>
+
+<div class="highlight highlight-python"><pre>ACCESS_TOKEN <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
+ACCESS_TOKEN_SECRET <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
+CONSUMER_KEY <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
+CONSUMER_SECRET <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
+
+TRANSIT_API_KEY <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span></pre></div>
+
+<p><i>(This is a temporary solution, eventually I plan on creating a way to input these on the first run or use a .config file)</i></p>
+
+<h4>
+<a id="future-features" class="anchor" href="#future-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future Features</h4>
+
+<ul>
+<li>Abuse checking: Make sure users aren't spamming the bot</li>
+<li>Extended modes: Search for nearby stops, get more than 1 result back, etc</li>
+<li>Automatic Reminders: Ask the bot to remind you 15, 30, 45mins before a bus is scheduled to arrive</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">WpgTransitBot maintained by <a href="https://github.com/MattMcMurray">MattMcMurray</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
