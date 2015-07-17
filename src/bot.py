@@ -13,7 +13,7 @@ class TwitterStreamListener (tweepy.StreamListener):
         try:
             printlog("Received new tweet: ")
             printlog(status.text)
-            reply_msg = parse_input(status)
+            reply_msg = build_reply(status)
             send_reply(status, reply_msg)
 
         except Exception as e:
@@ -52,7 +52,7 @@ def run():
     return
 
 
-def parse_input(tweet):
+def build_reply(tweet):
     msg = "I'm sorry, I didn't understand that. Tweets must be in this format: " \
           "<stop #> <route #> (or that bus/stop combo doesn't exist)"
 
