@@ -11,10 +11,9 @@ class TwitterStreamListener (tweepy.StreamListener):
 
     def on_status(self, status):
         try:
-            printlog("Received new tweet: ")
-            printlog(status.text)
-            reply_msg = build_reply(status)
-            send_reply(status, reply_msg)
+            # spawn a new thread so that bot can continue to
+            # handle incoming input
+            thread.start_new_thread(handle_msg, status)
 
         except Exception as e:
             printlog('ERROR: Fetching tweets went wrong.')
@@ -52,6 +51,12 @@ def run():
     return
 
 
+def handle_msg(status):
+    printlog("Received new tweet: ")
+    printlog(status.text)
+    reply_msg = build_reply(status)
+    send_reply(status, reply_msg)
+
 def build_reply(tweet):
     msg = "I'm sorry, I didn't understand that. Tweets must be in this format: " \
           "<stop #> <route #> (or that bus/stop combo doesn't exist)"
@@ -73,10 +78,6 @@ def build_reply(tweet):
 def send_reply(reply_to_tweet, msg_body):
     username = reply_to_tweet.user.screen_name
     tweet_id = reply_to_tweet.id
-    #
-    # msg = "Your tweet was received"
-    #
-    # API.update_status(status=msg, in_reply_to_status_id=)
 
     message = "@{0} {1}".format(username, msg_body)
 
