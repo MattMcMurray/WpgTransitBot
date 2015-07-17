@@ -1,5 +1,6 @@
 import tweepy
 import logging
+import thread
 
 from services import printlog, getlogdir, clearlogs
 from auth import API
@@ -12,7 +13,8 @@ class TwitterStreamListener (tweepy.StreamListener):
         try:
             printlog("Received new tweet: ")
             printlog(status.text)
-            parse_input(status)
+            reply_msg = parse_input(status)
+            send_reply(status, reply_msg)
 
         except Exception as e:
             printlog('ERROR: Fetching tweets went wrong.')
@@ -65,7 +67,8 @@ def parse_input(tweet):
         printlog("Error while processing user's input:")
         printlog(e.message)
 
-    send_reply(tweet, msg)
+    return msg
+
 
 def send_reply(reply_to_tweet, msg_body):
     username = reply_to_tweet.user.screen_name
