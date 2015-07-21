@@ -12,9 +12,9 @@ from services import printlog
 def __request_bus_times(stop, route, start_time, end_time):
     url = "http://api.winnipegtransit.com/v2/stops/{0}/schedule?" .format(stop)
 
-    if start_time != None and end_time != None:
+    if start_time is not None and end_time is not None:
         url += 'start={0}&end={1}&'.format(start_time, end_time)
-    if route != None:
+    if route is not None:
         url += 'route={0}&'.format(route)
     url += 'api-key={0}'.format(TRANSIT_API_KEY)
 
