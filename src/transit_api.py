@@ -8,10 +8,17 @@ from dateutil import parser
 from services import printlog
 
 
-def __request_bus_times(stopnum, start_time, end_time):
-    url = "http://api.winnipegtransit.com/v2/stops/{0}/schedule" .format(stopnum)
-    url += '?start={0}&end={1}'.format(start_time, end_time)
-    url += '&api-key={0}'.format(TRANSIT_API_KEY)
+# to get all arrival times, leave 'route' as None
+def __request_bus_times(stop, route, start_time, end_time):
+    url = "http://api.winnipegtransit.com/v2/stops/{0}/schedule?" .format(stop)
+
+    if start_time != None and end_time != None:
+        url += 'start={0}&end={1}&'.format(start_time, end_time)
+    if route != None:
+        url += 'route={0}&'.format(route)
+    url += 'api-key={0}'.format(TRANSIT_API_KEY)
+
+    print url
 
     try:
         xml_file = urllib2.urlopen(url)
@@ -31,20 +38,14 @@ def __request_bus_times(stopnum, start_time, end_time):
 
 def get_next_arrival(stopnum, routenum):
     start, end = get_wpg_time()
-    dom = __request_bus_times(stopnum, start, end)
+    dom = __request_bus_times(stopnum, routenum, start, end)
     next_arrival = None
-
+    
     try:
-        routes = dom.getElementsByTagName('route')
+        estimated_arrivals = dom.getElementsByTagName('estimated')
 
-        for route in routes:
-            key = route.firstChild.nextSibling
-            if int(key.firstChild.data) == routenum:
-                scheduled_stops = key.parentNode.nextSibling.nextSibling
-                # this is ugly, but WpgTransit has a million nested items
-                arrival = scheduled_stops.childNodes[1].childNodes[3].childNodes[1].childNodes[1].firstChild.data
-
-                next_arrival = parser.parse(arrival)
+        arrival = estimated_arrivals[0].firstChild.data
+        next_arrival = parser.parse(arrival)
 
     except Exception as e:
         printlog('Something went wrong while parsing XML for stop schedule')
