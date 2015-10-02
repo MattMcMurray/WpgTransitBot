@@ -2,15 +2,23 @@ import urllib2
 import StringIO
 
 from xml.dom.minidom import parse
-from secrets import TRANSIT_API_KEY
 from time_adjust import get_wpg_time
 from dateutil import parser
+from services import printlog
+from keyWrapper import getKeyObj
 
 
-def __request_bus_times(stopnum, start_time, end_time):
-    url = "http://api.winnipegtransit.com/v2/stops/{0}/schedule" .format(stopnum)
-    url += '?start={0}&end={1}'.format(start_time, end_time)
-    url += '&api-key={0}'.format(TRANSIT_API_KEY)
+# to get all arrival times, leave 'route' as None
+def __request_bus_times(stop, route, start_time, end_time):
+    url = "http://api.winnipegtransit.com/v2/stops/{0}/schedule?" .format(stop)
+
+    if start_time is not None and end_time is not None:
+        url += 'start={0}&end={1}&'.format(start_time, end_time)
+    if route is not None:
+        url += 'route={0}&'.format(route)
+    url += 'api-key={0}'.format(getKeyObj().wpg_transit_key)
+
+    print url
 
     try:
         xml_file = urllib2.urlopen(url)
@@ -22,30 +30,25 @@ def __request_bus_times(stopnum, start_time, end_time):
         return dom
 
     except IOError as e:
-        print (e)
+        printlog("IOError while requesting bus times")
+        printlog(e.message)
 
         return None
 
 
 def get_next_arrival(stopnum, routenum):
     start, end = get_wpg_time()
-    dom = __request_bus_times(stopnum, start, end)
+    dom = __request_bus_times(stopnum, routenum, start, end)
     next_arrival = None
-
+    
     try:
-        routes = dom.getElementsByTagName('route')
+        estimated_arrivals = dom.getElementsByTagName('estimated')
 
-        for route in routes:
-            key = route.firstChild.nextSibling
-            if int(key.firstChild.data) == routenum:
-                scheduled_stops = key.parentNode.nextSibling.nextSibling
-                # this is ugly, but WpgTransit has a million nested items
-                arrival = scheduled_stops.childNodes[1].childNodes[3].childNodes[1].childNodes[1].firstChild.data
-
-                next_arrival = parser.parse(arrival)
+        arrival = estimated_arrivals[0].firstChild.data
+        next_arrival = parser.parse(arrival)
 
     except Exception as e:
-        print 'Something went wrong while parsing XML for stop schedule'
-        print e.message
+        printlog('Something went wrong while parsing XML for stop schedule')
+        printlog(e.message)
 
     return next_arrival
