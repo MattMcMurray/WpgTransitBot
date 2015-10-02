@@ -16,7 +16,6 @@ The bot now asks for your API keys!
 
 Everytime the bot runs, it will ask if you'd like to load previously stored credentials. If it is your first time running the bot, you'll have to input your keys. If you've already run the bot and saved your creds, they'll be stored for future use and you can load those on each run. 
 
-<i>(This is a temporary solution, eventually I plan on creating a way to input these on the first run or use a .config file)</i>
 
 #### Future Features
 - Abuse checking: Make sure users aren't spamming the bot
