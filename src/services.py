@@ -3,6 +3,7 @@ import os
 import shutil
 
 def printlog(msg):
+	print msg
 	time, extratime= get_wpg_time()
 	out = '[{0}] : {1}\n'.format(time, msg)
 

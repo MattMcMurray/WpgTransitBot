@@ -2,10 +2,10 @@ import urllib2
 import StringIO
 
 from xml.dom.minidom import parse
-from secrets import TRANSIT_API_KEY
 from time_adjust import get_wpg_time
 from dateutil import parser
 from services import printlog
+from keyWrapper import getKeyObj
 
 
 # to get all arrival times, leave 'route' as None
@@ -16,7 +16,7 @@ def __request_bus_times(stop, route, start_time, end_time):
         url += 'start={0}&end={1}&'.format(start_time, end_time)
     if route is not None:
         url += 'route={0}&'.format(route)
-    url += 'api-key={0}'.format(TRANSIT_API_KEY)
+    url += 'api-key={0}'.format(getKeyObj().wpg_transit_key)
 
     print url
 

@@ -1,16 +1,10 @@
 import os
 import tweepy
 import pickle
-import pprint
 
 from services import printlog
+import keyWrapper
 
-class Key:
-    def __init__(self, access_token, access_secret, consumer_key, consumer_secret):
-        self.access_token = access_token
-        self.access_secret = access_secret
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
 
 def getUserCreds():
     print '*********************'
@@ -21,43 +15,76 @@ def getUserCreds():
     c_key = raw_input("Please enter your consumer key:\n")
     c_secret = raw_input("Please enter your consumer secret:\n")
 
-    key = Key(a_token, a_secret, c_key, c_secret)
+    print '*********************'
+    print '***  Wpg Transit  ***'
+    print '*********************'
+    wpg_transit_key = raw_input("Please enter you wpg transit API key:\n")
+
+    key = keyWrapper.Key(a_token, a_secret, c_key, c_secret, wpg_transit_key)
     printlog("Instatiated key object")
 
     return key
 
 def authenticate():
-    print 'authenticating'
     # get the absolute path of this file to avoid relative path weirdness
     here = os.path.dirname(os.path.abspath(__file__))
     resource_dir = '{0}/../res/'.format(here)
     key_filename = 'key.pkl'
 
-    if not os.path.exists(resource_dir):
-        os.makedirs(resource_dir)
+    key = None
 
-    if os.path.isfile(resource_dir + key_filename):
-        key_file = open(resource_dir+key_filename, 'r')
-        key = pickle.load(key_file)
+    try:
+        load_prev = False
+        response = raw_input("Would you like to load previously used API keys? [y/n]")
+        if (response == 'y'):
+            load_prev = True
+
+        if load_prev:
+            key = keyWrapper.getKeyObj()
+
+            if key is None:
+                printlog("No previously entered keys found...\n")
+                key = getUserCreds()
+                keyWrapper.saveKeyObj(key)
+
+        else:
+            key = getUserCreds()
+            keyWrapper.saveKeyObj(key)
+
+
+    except IOError as ioe:
+        print "Something went wrong during file I/O"
+        print "Exiting..."
+        exit()
 
     else:
-        key = getUserCreds()
-        key_file = open(resource_dir+key_filename, 'wb')
-        pickle.dump(key, key_file)
+        printlog("Keys successfully loaded")
 
 
-        # try:
-        #     auth = tweepy.OAuthHandler(key.consumer_key, key.consumer_secret)
-        #     auth.set_access_token(key.access_token, key.access_secret)
-        #     api = tweepy.API(auth)
+        if key is not None:
 
-        #     #TODO fix; authentication always returns OK
-        #     return api
+            try:
+                auth = tweepy.OAuthHandler(
+                    key.consumer_key, 
+                    key.consumer_secret
+                    )
+                auth.set_access_token(
+                    key.access_token, 
+                    key.access_secret)
 
-        # except tweepy.TweepError as e:
-        # 	printlog("Tweepy Error while autheticating")
-        #     printlog(e.message)
-        #     return False
+                api = tweepy.API(auth)
 
-# API = authenticate()
-authenticate()
+                #TODO fix; authentication always returns OK
+                return api
+
+            except tweepy.TweepError as e:
+            	printlog("Tweepy Error while autheticating")
+                printlog(e.message)
+                return False
+
+        else:
+            printlog("There was some sort of error loading the API keys")
+
+
+if __name__ == "__main__":
+    authenticate()

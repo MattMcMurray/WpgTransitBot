@@ -3,18 +3,18 @@ import logging
 import thread
 
 from services import printlog, getlogdir, clearlogs
-from auth import API
-from transit_api import get_next_arrival
+
+import auth
+import transit_api
+
+DUPLICATE_MSG_ERR = 187
 
 
 class TwitterStreamListener (tweepy.StreamListener):
 
     def on_status(self, status):
         try:
-            # spawn a new thread so that bot can continue to
-            # handle incoming input
-            thread.start_new_thread(handle_msg, status)
-
+            handle_msg(status)
         except Exception as e:
             printlog('ERROR: Fetching tweets went wrong.')
             printlog(e.message)
@@ -28,13 +28,16 @@ def run():
 
     printlog('Starting...')
     stream_listener = TwitterStreamListener()
-    stream = tweepy.Stream(auth=API.auth, listener=stream_listener)
+    stream = tweepy.Stream(auth=TWITTER_API.auth, listener=stream_listener)
 
     try:
-        API.update_status(status=startupmsg)
+        TWITTER_API.update_status(status=startupmsg)
     except Exception as e:
-        printlog("Could not send startupmsg:")
-        printlog(e.message)
+        printlog("Could not send startupmsg:\n\tcode {0} -- {1}".format(e.message[0]['code'], e.message[0]['message']))
+
+        # If the error is not a 'duplicate status' error, exit
+        if (e.message[0]['code'] != DUPLICATE_MSG_ERR):
+            exit()
 
     while True:
 
@@ -57,6 +60,7 @@ def handle_msg(status):
     reply_msg = build_reply(status)
     send_reply(status, reply_msg)
 
+
 def build_reply(tweet):
     msg = "I'm sorry, I didn't understand that. Tweets must be in this format: " \
           "<stop #> <route #> (or that bus/stop combo doesn't exist)"
@@ -65,7 +69,7 @@ def build_reply(tweet):
 
     try:
         user, stopnum, routenum = tweet_text.split()
-        arrival = get_next_arrival(int(stopnum), int(routenum))
+        arrival = transit_api.get_next_arrival(int(stopnum), int(routenum))
         msg = "The next {0} arrives at stop number {1} at {2}".format(routenum, stopnum, arrival.time())
 
     except Exception as e:
@@ -82,7 +86,7 @@ def send_reply(reply_to_tweet, msg_body):
     message = "@{0} {1}".format(username, msg_body)
 
     printlog(message)
-    API.update_status(status=message, in_reply_to_status_id=tweet_id)
+    TWITTER_API.update_status(status=message, in_reply_to_status_id=tweet_id)
     printlog('Message sent!')
 
 
@@ -93,9 +97,9 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, filename=errorfile)
 
     try:
+        TWITTER_API = auth.authenticate()
         run()
     except Exception as e:
         printlog('UNHANDLED EXCEPTION:')
         printlog(e.message)
         logging.exception(e)
-
