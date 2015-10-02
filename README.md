@@ -2,14 +2,15 @@
 Using Winnipeg Transit's developer API and Tweepy to replicate Transit's bustxt service on Twitter
 
 ####Requirements
-- It's a good idea to install these dependencies inside a virtualenv (`pip install virtualenv`)
+- It's a good idea to install these dependencies inside a `virtualenv`
 - You will need to have the following installed:
-  - [Tweepy](https://github.com/tweepy/tweepy) (`pip install tweepy==3.2.0`)
-    - due to a known issue in the newest version of Tweepy, make sure to use V3.2.0
-  - Dateutil (`pip install python-dateutil`)
-  - Pytz (for timezone adjustement) (`pip install pytz`)
-- I've included a `requirements.txt` file to make life easier
-  - `cd` into WpgTransitBot dir and run `pip install -U -r requirements.txt`
+  - [Tweepy](https://github.com/tweepy/tweepy)
+  - Dateutil
+  - Pytz
+- I've included two scripts to make life easier:
+  - First, run `setup.sh` to prepare the environment and install dependencies
+  - Next, run `startbot.sh` to set your API keys and run the bot
+  - That's it!
 
 ####Authentication
 The bot now asks for your API keys!
