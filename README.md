@@ -12,16 +12,9 @@ Using Winnipeg Transit's developer API and Tweepy to replicate Transit's bustxt 
   - `cd` into WpgTransitBot dir and run `pip install -U -r requirements.txt`
 
 ####Authentication
-To set up Twitter's/Tweepy's authentication, create a Python file (Secrets.py) in the source directory with the following:
+The bot now asks for your API keys!
 
-```python
-ACCESS_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-ACCESS_TOKEN_SECRET = 'XXXXXXXXXXXXXXXXXXXXXXXX'
-CONSUMER_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-CONSUMER_SECRET = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-
-TRANSIT_API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXX'
-```
+Everytime the bot runs, it will ask if you'd like to load previously stored credentials. If it is your first time running the bot, you'll have to input your keys. If you've already run the bot and saved your creds, they'll be stored for future use and you can load those on each run. 
 
 <i>(This is a temporary solution, eventually I plan on creating a way to input these on the first run or use a .config file)</i>
 

@@ -43,7 +43,6 @@ def run():
 
         try:
             printlog('Tracking tweets...')
-
             stream.filter(track=['@WpgTransitBot'])
 
         except AttributeError as e:

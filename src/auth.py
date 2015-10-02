@@ -36,14 +36,14 @@ def authenticate():
     try:
         load_prev = False
         response = raw_input("Would you like to load previously used API keys? [y/n]")
-        if (response == 'y'):
+        if (response == 'y' or response == 'yes'):
             load_prev = True
 
         if load_prev:
             key = keyWrapper.getKeyObj()
 
             if key is None:
-                printlog("No previously entered keys found...\n")
+                print ("\n[ERROR] No previously entered keys found...\n")
                 key = getUserCreds()
                 keyWrapper.saveKeyObj(key)
 
