@@ -31,10 +31,16 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h4>
+        <h1>
+<a id="wpgtransitbot" class="anchor" href="#wpgtransitbot" aria-hidden="true"><span class="octicon octicon-link"></span></a>WpgTransitBot</h1>
+
+<p>Using Winnipeg Transit's developer API and Tweepy to replicate Transit's bustxt service on Twitter</p>
+
+<h4>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h4>
 
 <ul>
+<li>It's a good idea to install these dependencies inside a virtualenv (<code>pip install virtualenv</code>)</li>
 <li>You will need to have the following installed:
 
 <ul>
@@ -47,7 +53,14 @@
 </li>
 <li>Dateutil (<code>pip install python-dateutil</code>)</li>
 <li>Pytz (for timezone adjustement) (<code>pip install pytz</code>)</li>
-<li>That's it!</li>
+</ul>
+</li>
+<li>I've included a <code>requirements.txt</code> file to make life easier
+
+<ul>
+<li>
+<code>cd</code> into WpgTransitBot dir and run <code>pip install -U -r requirements.txt</code>
+</li>
 </ul>
 </li>
 </ul>
@@ -55,16 +68,9 @@
 <h4>
 <a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication</h4>
 
-<p>To set up Twitter's/Tweepy's authentication, create a Python file (secrets.py) in the source directory with the following:</p>
+<p>The bot now asks for your API keys!</p>
 
-<div class="highlight highlight-python"><pre>ACCESS_TOKEN <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
-ACCESS_TOKEN_SECRET <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
-CONSUMER_KEY <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
-CONSUMER_SECRET <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span>
-
-TRANSIT_API_KEY <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>XXXXXXXXXXXXXXXXXXXXXXX<span class="pl-pds">'</span></span></pre></div>
-
-<p><i>(This is a temporary solution, eventually I plan on creating a way to input these on the first run or use a .config file)</i></p>
+<p>Everytime the bot runs, it will ask if you'd like to load previously stored credentials. If it is your first time running the bot, you'll have to input your keys. If you've already run the bot and saved your creds, they'll be stored for future use and you can load those on each run. </p>
 
 <h4>
 <a id="future-features" class="anchor" href="#future-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future Features</h4>
@@ -85,7 +91,17 @@ TRANSIT_API_KEY <span class="pl-k">=</span> <span class="pl-s"><span class="pl-p
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-68375423-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
