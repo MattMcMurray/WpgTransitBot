@@ -31,26 +31,8 @@ def authenticate():
     resource_dir = '{0}/../res/'.format(here)
     key_filename = 'key.pkl'
 
-    key = None
-
     try:
-        load_prev = False
-        response = raw_input("Would you like to load previously used API keys? [y/n]")
-        if (response == 'y' or response == 'yes'):
-            load_prev = True
-
-        if load_prev:
-            key = keyWrapper.getKeyObj()
-
-            if key is None:
-                print ("\n[ERROR] No previously entered keys found...\n")
-                key = getUserCreds()
-                keyWrapper.saveKeyObj(key)
-
-        else:
-            key = getUserCreds()
-            keyWrapper.saveKeyObj(key)
-
+        key = keyWrapper.getKeyObj()
 
     except IOError as ioe:
         print "Something went wrong during file I/O"
@@ -59,7 +41,6 @@ def authenticate():
 
     else:
         printlog("Keys successfully loaded")
-
 
         if key is not None:
 
@@ -87,4 +68,19 @@ def authenticate():
 
 
 if __name__ == "__main__":
-    authenticate()
+
+    response = raw_input("Would you like to load previously used API keys? [y/n]")
+
+    if (response == 'y' or response == 'yes'):
+
+        if keyWrapper.doesKeyExist():
+            authenticate()
+        else:
+            key = getUserCreds()
+            keyWrapper.saveKeyObj(key)
+
+    else:
+        key = getUserCreds()
+        keyWrapper.saveKeyObj(key)
+        authenticate()
+

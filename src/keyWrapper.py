@@ -16,7 +16,7 @@ class Key:
 def getKeyObj():
 	key = None
 
-	if os.path.isfile(resource_dir + key_filename):
+	if doesKeyExist():
 		key_file = open(resource_dir + key_filename, 'r')
 		key = pickle.load(key_file)
 
@@ -28,4 +28,7 @@ def saveKeyObj(key):
 
 	key_file = open(resource_dir + key_filename, 'wb')
 	pickle.dump(key, key_file, pickle.HIGHEST_PROTOCOL)
+
+def doesKeyExist():
+	return os.path.isfile(resource_dir + key_filename)
 
